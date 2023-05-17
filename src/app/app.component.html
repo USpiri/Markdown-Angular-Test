@@ -1,0 +1,43 @@
+<div class="d-flex flex-row w-100 h-100 p-2">
+  <div class="w-50 h-100">
+    <!-- Form -->
+    <form novalidate #form="ngForm" class="h-100">
+      <!-- Editor -->
+      <md-editor
+        #md="ngModel"
+        name="Content"
+        (onEditorLoaded)="onEditorLoaded($event)"
+        [preRender]="preRender"
+        [postRender]="postRender"
+        (onPreviewDomChanged)="onPreviewDomChanged($event)"
+        [upload]="doUpload"
+        [(ngModel)]="content"
+        [mode]="mode"
+        [options]="options"
+        required
+        height="400px"
+      >
+        <!-- Custom Button -->
+        <div custom-btns>
+          <input
+            #imgInput
+            type="file"
+            style="display: none"
+            (change)="uploadImg($event)"
+          />
+          <button
+            type="button"
+            class="btn btn-sm btn-default"
+            (click)="imgInput.click()"
+          >
+            Upload Img
+          </button>
+        </div>
+      </md-editor>
+    </form>
+  </div>
+  <!-- Viewer -->
+  <div class="w-50 h-100 p-3">
+    <markdown [data]="content"></markdown>
+  </div>
+</div>
