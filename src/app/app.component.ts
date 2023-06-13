@@ -1,20 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MdEditorOption, UploadResult } from 'ngx-markdown-editor';
+import { MarkdownService } from 'ngx-markdown';
+import { MARKDOWN_2 } from './md/md';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
+  /**
+   * * Nota
+   * El componente editor fue commentado para trabajar más comodamente
+   * con el estilo de previsualización.
+   */
+
   public mode: string = 'editor';
+
+  // Configuración del editor
   public options: MdEditorOption = {
     showPreviewPanel: false,
     enablePreviewContentClick: false,
     resizable: false,
-    /**
-     * Para el renderizado del editor (No el de la derecha)
-     */
     customRender: {
       image: function (href: string, title: string, text: string) {
         let out = `<img style="max-width: 100%; border: 20px solid red;" src="${href}" alt="${text}"`;
@@ -47,41 +54,37 @@ export class AppComponent implements OnInit {
     //   CheckBox_Checked: { fontClass: 'fa-solid fa-check-square' }
     // },
     markedjsOpt: {
-      sanitize: true,
+      sanitize: false,
     },
   };
 
   title = 'md-test-2';
-  public content = '';
+  public content = MARKDOWN_2;
+  renderedContent = '';
 
-  constructor() {
+  constructor(private markdownService: MarkdownService) {
     this.doUpload = this.doUpload.bind(this);
   }
 
-  ngOnInit() {
-    /**
-     * Markdown de ejemplo
-     */
-    const contentArr = ['# Hello, Markdown Editor!'];
-    contentArr.push('```javascript ');
-    contentArr.push('function Test() {');
-    contentArr.push('	console.log("Test");');
-    contentArr.push('}');
-    contentArr.push('```');
-    contentArr.push(' Name | Type');
-    contentArr.push(' ---- | ----');
-    contentArr.push(' A | Test');
-    contentArr.push(
-      '![](http://lon-yang.github.io/markdown-editor/favicon.ico)'
-    );
-    contentArr.push('');
-    contentArr.push('- [ ] Taks A');
-    contentArr.push('- [x] Taks B');
-    contentArr.push('- test');
-    contentArr.push('');
-    contentArr.push('[Link](https://www.google.com)');
-    contentArr.push('');
-    this.content = contentArr.join('\r\n');
+  /**
+   * Filtra y aplica un renderizado custom para componentes custom Ej: [info][/info]
+   * al que lo renderiza como un div con la clase info. Esta clase tiene su estilo
+   * personalizado en el scss de este componente => ./app.component.scss
+   */
+  procesarSintaxisPersonalizada(content: string) {
+    // Regla regex para separar el contenido de las 'tags' [info][/info]
+    const regex = /\[info\]([\s\S]*?)\[\/info\]/g;
+    // Reemplazo del contenido
+    return content.replace(/\n/g, '  \n').replace(regex, (match, content) => {
+      /**
+       * El markdown service es utilizado para tomar el contenido que está dentro de
+       * las tags y tratarlo como si fuera un markdown, es decir, permitir el uso de
+       * escritura propia de markdown dentro del mismo componente. Ej: Usar # para
+       * titulos
+       */
+      const renderedHtml = this.markdownService.parse(content);
+      return `<div class="info d-flex flex-column p-3 px-4"><div class='mb-2 header'><i class="fa-solid fa-info me-2"></i>Info</div><div>${renderedHtml}</div></div>`;
+    });
   }
 
   /**
@@ -199,5 +202,12 @@ export class AppComponent implements OnInit {
     console.log(`onPreviewDomChanged fired`);
     // console.log(dom);
     // console.log(dom.innerHTML)
+  }
+
+  handleKeyPress(event: Event) {
+    const element = event.target as HTMLElement;
+    const content = element.textContent;
+    console.log('Contenido:', element.innerHTML);
+    this.content = element.innerHTML;
   }
 }

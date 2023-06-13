@@ -1,0 +1,32 @@
+::ng-deep .info {
+  background-color: #027aff1a;
+  // border: 1px solid red;
+  border-radius: 5px;
+  margin: 1.5rem 0;
+  .header {
+    color: #027aff;
+    font-weight: 600;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.025em;
+    // font-size: 1.5em;
+    margin-block-start: unset;
+    margin-block-end: 0.4em;
+  }
+  p {
+    margin-bottom: unset;
+  }
+}
+.test-container {
+  background-color: #202020;
+}
+
+// .post ::ng-deep h1 {
+//   color: blue;
+//   margin: 50px;
+// }

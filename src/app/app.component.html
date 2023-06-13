@@ -1,9 +1,9 @@
-<div class="d-flex flex-row w-100 h-100 p-2">
-  <div class="w-50 h-100">
-    <!-- Form -->
-    <form novalidate #form="ngForm" class="h-100">
-      <!-- Editor -->
-      <md-editor
+<!-- <div class="d-flex flex-row w-100 h-100 p-2">
+  <div class="w-50 h-100"> -->
+<!-- Form -->
+<!-- <form novalidate #form="ngForm" class="h-100"> -->
+<!-- Editor -->
+<!-- <md-editor
         #md="ngModel"
         name="Content"
         (onEditorLoaded)="onEditorLoaded($event)"
@@ -16,9 +16,9 @@
         [options]="options"
         required
         height="400px"
-      >
-        <!-- Custom Button -->
-        <div custom-btns>
+      > -->
+<!-- Custom Button -->
+<!-- <div custom-btns>
           <input
             #imgInput
             type="file"
@@ -35,9 +35,45 @@
         </div>
       </md-editor>
     </form>
+  </div> -->
+<!-- Viewer -->
+<!-- <div class="m-container p-3 post">
+    <markdown
+      [data]="procesarSintaxisPersonalizada(content)"
+      ngPreserveWhitespaces
+    ></markdown>
   </div>
-  <!-- Viewer -->
-  <div class="w-50 h-100 p-3">
-    <markdown [data]="content"></markdown>
+</div> -->
+
+<!-- Markdown Only -->
+<!-- <div
+  class="w-100 d-flex align-items-center justify-content-center test-container"
+>
+  <div class="m-container p-3 post">
+    <markdown
+      contenteditable="true"
+      (input)="handleKeyPress($event)"
+      [data]="procesarSintaxisPersonalizada(content)"
+      ngPreserveWhitespaces
+    ></markdown>
+  </div>
+</div> -->
+
+<!-- Custom Material Editor -->
+<div class="d-flex flex-row w-100 min-vh-100 p-2 test-container">
+  <div class="w-50 h-100 p-3 mt-4">
+    <form class="w-100">
+      <app-markdown-editor
+        [(ngModel)]="content"
+        name="markdown"
+        class="w-100"
+      ></app-markdown-editor>
+    </form>
+  </div>
+  <div class="m-container p-3 post">
+    <markdown
+      [data]="procesarSintaxisPersonalizada(content)"
+      ngPreserveWhitespaces
+    ></markdown>
   </div>
 </div>

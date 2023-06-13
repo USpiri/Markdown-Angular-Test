@@ -1,0 +1,25 @@
+<div class="w-100 d-flex flex-wrap mb-1 gap-1">
+  <button mat-flat-button class="editor-button" (click)="boldText()">
+    <mat-icon class="m-0">format_bold</mat-icon>
+  </button>
+  <button mat-flat-button class="editor-button" (click)="italicText()">
+    <mat-icon class="m-0">format_italic</mat-icon>
+  </button>
+  <button mat-flat-button class="editor-button">
+    <mat-icon class="m-0">image</mat-icon>
+  </button>
+  <button mat-flat-button class="editor-button">
+    <mat-icon class="m-0">more_vert</mat-icon>
+  </button>
+</div>
+<mat-form-field class="w-100">
+  <mat-label>Textarea</mat-label>
+  <textarea
+    #editor
+    matInput
+    [value]="value"
+    (input)="onChange(getInputElementValue($event))"
+    (keydown)="handleKeys($event)"
+    class="editor"
+  ></textarea>
+</mat-form-field>
