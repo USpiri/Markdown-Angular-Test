@@ -72,5 +72,5 @@ hr
 `;
 export const MARKDOWN_2 = `# Que es inject()?
 
-A partir de la versión 14 de Angular, se puso a disposición una función llamada "inject()". Esta toma un InjectionToken como parámetro y devuelve el valor de ese InjectionToken. Básicamente, es otra forma de obtener una dependencia que no sea usar la inyección del constructor. Aquí hay un ejemplo.
+A partir de la versión 14 de Angular,
 `;

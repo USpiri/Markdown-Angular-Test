@@ -36,6 +36,8 @@ import { MatIconModule } from '@angular/material/icon';
           pedantic: false,
           smartLists: true,
           smartypants: false,
+          headerIds: false,
+          mangle: false,
         },
       },
     }),
